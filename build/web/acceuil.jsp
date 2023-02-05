@@ -54,7 +54,7 @@
                 </div>
                 <p>Ce formuliaire vous permet d'accelerer votre vehicule.</p>
                 <p>Inserer juste la valeur en <b>Km</b> la distance que vous voulez aller.</p>
-                <form class="form" action="traitement/accelerate.jsp?id=<%= request.getParameter("id") %>" method="post">
+                <form class="form" action="traitement/accelerate.jsp" method="post">
                     <div class="form-control">
                         <input type="number" name="vitesse" placeholder="6 km">
                     </div>

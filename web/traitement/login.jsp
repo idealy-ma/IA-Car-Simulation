@@ -12,7 +12,8 @@
     u.setMotdepasse(request.getParameter("password"));
     
     if(u.login()){
-        response.sendRedirect("../acceuil.jsp?id="+u.getId());
+        session.setAttribute("user", u.getId());
+        response.sendRedirect("../acceuil.jsp");
     } else {
         response.sendRedirect("../index.html");
     }

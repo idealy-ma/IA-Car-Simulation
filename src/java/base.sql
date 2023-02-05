@@ -62,12 +62,11 @@ CREATE TABLE consomation(
     valeur float8 check (valeur>0)
 );
 
+
+
 INSERT INTO utilisateur VALUES (default,'Idealy', 150, 'Idealy', '1234');
-
 INSERT INTO configuration VALUES (default, 'Climatiseur');
-
 INSERT INTO utilisateurpreference VALUES(1, 1, 24);
-
 INSERT INTO configurationdefault VALUES(1,10);
 
 CREATE OR REPLACE VIEW utilisateurPref AS(
@@ -90,3 +89,18 @@ CREATE OR REPLACE VIEW configurationDefaut AS(
     ON configurationdefault.configurationid = configuration.id
     CROSS JOIN utilisateur
 );
+
+CREATE OR REPLACE VIEW default_disposition AS (
+    SELECT utilisateur.id utilisateurId,
+           posx,
+           posy
+    FROM dispositiondefault
+    CROSS JOIN utilisateur
+    WHERE (utilisateur.taille between dispositiondefault.tailledebut and dispositiondefault.taillefin)
+);
+
+select * from utilisateurpref;
+select * from configurationdefaut;
+
+select * from chaisedisposition;
+select * from default_disposition;
