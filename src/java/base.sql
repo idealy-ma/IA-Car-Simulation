@@ -62,3 +62,4 @@ CREATE TABLE consomation(
     valeur float8 check (valeur>0)
 );
 
+INSERT INTO utilisateur VALUES (default,'Idealy',150, 'Idealy', '1234');
