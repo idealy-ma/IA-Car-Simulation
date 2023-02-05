@@ -62,4 +62,31 @@ CREATE TABLE consomation(
     valeur float8 check (valeur>0)
 );
 
-INSERT INTO utilisateur VALUES (default,'Idealy',150, 'Idealy', '1234');
+INSERT INTO utilisateur VALUES (default,'Idealy', 150, 'Idealy', '1234');
+
+INSERT INTO configuration VALUES (default, 'Climatiseur');
+
+INSERT INTO utilisateurpreference VALUES(1, 1, 24);
+
+INSERT INTO configurationdefault VALUES(1,10);
+
+CREATE OR REPLACE VIEW utilisateurPref AS(
+    SELECT utilisateurid,
+       configurationid,
+       label config,
+       valeur
+    FROM utilisateurpreference
+    JOIN configuration
+    ON utilisateurpreference.configurationid = configuration.id
+);
+
+CREATE OR REPLACE VIEW configurationDefaut AS(
+    SELECT utilisateur.id utilisateurId,
+           configurationid,
+           label config,
+           valeur
+    FROM configurationdefault
+    JOIN configuration
+    ON configurationdefault.configurationid = configuration.id
+    CROSS JOIN utilisateur
+);
