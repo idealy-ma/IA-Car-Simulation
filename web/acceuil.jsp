@@ -3,6 +3,13 @@
     Created on : Feb 4, 2023, 8:43:15 PM
     Author     : i.m.a
 --%>
+<%@page import="model.Configuration"%>
+<%@page import="java.util.ArrayList" %>
+<%@page import="model.Utilisateur" %>
+<%
+    Utilisateur u = (Utilisateur) session.getAttribute("user");
+    ArrayList<Configuration> configurations = u.getListeConfiguration(null);
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,12 +30,14 @@
             </div>
             <div class="user-pref">
                 <h3>Information du preference utilisateur</h3>
-                <div class="card-info">
-                    <div class="card-header">
-                        <h4>Climatiseur (deg)</h4>
+                <% for (Configuration configuration : configurations) { %>
+                    <div class="card-info">
+                        <div class="card-header">
+                            <h4><%= configuration.getConfig() %></h4>
+                        </div>
+                        <p><%= configuration.getValeur() %></p>
                     </div>
-                    <p>24 deg</p>
-                </div>
+                <%  } %>
             </div>
             
             <div class="vehicle-info">

@@ -66,8 +66,13 @@ CREATE TABLE consomation(
 
 INSERT INTO utilisateur VALUES (default,'Idealy', 150, 'Idealy', '1234');
 INSERT INTO configuration VALUES (default, 'Climatiseur');
+INSERT INTO configuration VALUES (default, 'Inclinaison Chaise');
+
 INSERT INTO utilisateurpreference VALUES(1, 1, 24);
+INSERT INTO utilisateurpreference VALUES(1, 2 ,90);
+
 INSERT INTO configurationdefault VALUES(1,10);
+INSERT INTO configurationdefault VALUES(2,45);
 
 CREATE OR REPLACE VIEW utilisateurPref AS(
     SELECT utilisateurid,
@@ -79,7 +84,7 @@ CREATE OR REPLACE VIEW utilisateurPref AS(
     ON utilisateurpreference.configurationid = configuration.id
 );
 
-CREATE OR REPLACE VIEW configurationDefaut AS(
+CREATE OR REPLACE VIEW v_configurationDefaut AS(
     SELECT utilisateur.id utilisateurId,
            configurationid,
            label config,
@@ -104,3 +109,22 @@ select * from configurationdefaut;
 
 select * from chaisedisposition;
 select * from default_disposition;
+
+select v_configurationDefaut.* from utilisateurpref;
+
+CREATE OR REPLACE VIEW v_not_in_user_pref AS(
+    select v_configurationDefaut.* from v_configurationDefaut 
+    left join utilisateurpref 
+    on v_configurationDefaut.configurationid = utilisateurpref.configurationid 
+    where utilisateurpref.utilisateurid is null
+);
+
+CREATE OR REPLACE VIEW v_userPref AS(
+    SELECT * 
+    FROM utilisateurpref
+    UNION
+    SELECT * 
+    FROM v_not_in_user_pref
+);
+
+select * from v_userPref;
