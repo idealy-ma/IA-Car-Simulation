@@ -1,0 +1,66 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Feb 4, 2023, 8:20:22 PM
+    Author     : i.m.a
+*/
+
+body{
+    font-family: 'Poppins';
+}
+
+.login-body{
+    padding: 10% 30%;
+}
+
+.login-card {
+    padding: 10%;
+    border-radius: 6px;
+    text-align: center;
+    box-shadow: 1px 1px 3px #999999;
+}
+
+.login-form{
+    margin: 2%;
+}
+
+.login-form input{
+    width: 100%;
+    padding: 2%;
+    border:none;
+    border-radius: 10px;
+    transition: 400ms;
+}
+
+.login-button {
+    margin: 2%;
+    width: 100%;
+}
+
+.login-button input{
+    width: 100%;
+    padding: 1.5%;
+    color: white;
+    background: black;
+    transition: 400ms;
+    border:none;
+    border: 0.1em black solid;
+    border-radius: 10px;
+}
+
+.login-button input:hover {
+    color: white;
+    border: #cccccc 0.1em solid;
+    background: #cccccc;
+    cursor: pointer;
+}
+
+.login-button input:active {
+    color: black;
+    border: #999999 0.1em solid;
+    background: #999999;
+    cursor: pointer;
+}
+
