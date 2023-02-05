@@ -16,11 +16,49 @@ CREATE TABLE utilisateur(
     motdepasse VARCHAR(255)
 );
 
-DROP TABLE IF EXISTS configuration;
+DROP TABLE IF EXISTS configuration CASCADE;
+CREATE TABLE configuration(
+    id serial primary key,
+    label varchar(80)
+);
+
+DROP TABLE IF EXISTS utilisateurPreference CASCADE;
+CREATE TABLE utilisateurPreference(
+    utilisateurId int references utilisateur(id),
+    configurationId int references configuration(id),
+    valeur float8
+);
+
+DROP TABLE IF EXISTS configurationDefault CASCADE;
+CREATE TABLE configurationDefault(
+    configurationId int references configuration(id),
+    valeur float8
+);
+
+DROP TABLE IF EXISTS chaiseDisposition CASCADE;
+CREATE TABLE chaiseDisposition(
+    utilisateurId int references utilisateur(id),
+    posX float8,
+    posY float8
+);
+
+DROP TABLE IF EXISTS dispositionDefault CASCADE;
+CREATE TABLE dispositionDefault(
+    posX float8,
+    posY float8,
+    tailleDebut float8,
+    tailleFin float8
+);
+
+DROP TABLE IF EXISTS kilometrageFait CASCADE;
+CREATE TABLE kilometrageFait(
+    id serial PRIMARY KEY,
+    valuer float8
+);
 
 DROP TABLE IF EXISTS consomation CASCADE;
 CREATE TABLE consomation(
     id serial primary key,
-    valeur float8 check valeur>0
+    valeur float8 check (valeur>0)
 );
 
