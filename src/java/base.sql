@@ -74,6 +74,14 @@ INSERT INTO utilisateurpreference VALUES(1, 2 ,90);
 INSERT INTO configurationdefault VALUES(1,10);
 INSERT INTO configurationdefault VALUES(2,45);
 
+insert into consomation VALUES (default, 20);
+
+insert into kilometragefait VALUES (default, 0);
+
+insert into dispositiondefault VALUES (30,30);
+
+insert into chaisedisposition VALUES (1,30,100);
+
 CREATE OR REPLACE VIEW utilisateurPref AS(
     SELECT utilisateurid,
        configurationid,
@@ -104,6 +112,8 @@ CREATE OR REPLACE VIEW default_disposition AS (
     WHERE (utilisateur.taille between dispositiondefault.tailledebut and dispositiondefault.taillefin)
 );
 
+select * from dispositiondefault;
+
 select * from utilisateurpref;
 select * from configurationdefaut;
 
@@ -128,3 +138,28 @@ CREATE OR REPLACE VIEW v_userPref AS(
 );
 
 select * from v_userPref;
+
+select * from default_disposition;
+
+create or replace view kilometrageTotal as(
+    select sum(valuer) kilometrage
+    from kilometragefait
+);
+
+create or replace view vehicule as(
+    select kilometrage, kilometrage*valeur consomation
+    from kilometrageTotal
+    cross join consomation
+);
+
+select * from vehicule;
+
+CREATE OR REPLACE VIEW v_chair_disposition AS(
+    SELECT default_disposition.utilisateurid,
+           COALESCE(chaisedisposition.posx,default_disposition.posx) posx, 
+           COALESCE(chaisedisposition.posy,default_disposition.posy) posy, 
+           default_disposition.posx defaultX,
+           default_disposition.posy defaultY
+    FROM chaisedisposition 
+    RIGHT JOIN default_disposition ON default_disposition.utilisateurid = chaisedisposition.utilisateurid
+);

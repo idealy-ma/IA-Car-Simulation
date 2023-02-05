@@ -17,7 +17,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     width: 30%;
     margin-right: 10px;
     height: 550px;
-    border-radius: 10px;
     padding: 0px 0px auto;
     display: inline-block;
     vertical-align: top;
@@ -94,4 +93,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .form .form-btn{
     transition: 400ms;
     cursor: pointer;
+}
+
+.chaise{
+    position: relative;
+    width: 100px;
+    height: 30px;
+    border: 0.1em black solid;
+}
+
+body{
+    padding-top: 30px;
 }

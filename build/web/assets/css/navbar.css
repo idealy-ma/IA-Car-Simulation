@@ -1,0 +1,30 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Feb 5, 2023, 11:58:47 PM
+    Author     : i.m.a
+*/
+
+.nav {
+    position: fixed;
+    top:0px;
+    display: flex;
+    align-content: center;
+    padding: 60px;
+}
+
+.nav a{
+    text-decoration: none;
+}
+
+.nav a div{
+    position: relative;
+    top : 0px;
+    transition: 300ms;
+}
+
+.nav a div:hover{
+    top:-10px;
+}

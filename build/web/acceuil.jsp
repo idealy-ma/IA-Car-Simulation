@@ -3,12 +3,22 @@
     Created on : Feb 4, 2023, 8:43:15 PM
     Author     : i.m.a
 --%>
+<%@page import="model.Chaise"%>
+<%@page import="model.Vehicule"%>
 <%@page import="model.Configuration"%>
 <%@page import="java.util.ArrayList" %>
 <%@page import="model.Utilisateur" %>
 <%
-    Utilisateur u = (Utilisateur) session.getAttribute("user");
-    ArrayList<Configuration> configurations = u.getListeConfiguration(null);
+    if(session.getAttribute("user")==null){
+        response.sendRedirect("index.html");
+    }
+    
+    Vehicule v = new Vehicule();
+    v.find(null);
+    v.setU((Utilisateur) session.getAttribute("user"));
+    
+    Chaise c = v.getU().getPreferenceChaise(null);
+    ArrayList<Configuration> configurations = v.getU().getListeConfiguration(null);
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,11 +27,25 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="assets/css/index.css"/>
         <link rel="stylesheet" href="assets/css/acceuil.css"/>
+        <style>
+            @keyframes depl{
+                from{
+                    top:<%= c.getDefaultX() %>px;
+                    left:<%= c.getDefaultY() %>px;
+                } to {
+                    top:<%= c.getPosY() %>px;
+                    left:<%= c.getPosX() %>px;
+                }
+            }
+        </style>
         <title>Voiture</title>
     </head>
     <body>
+        <%@include file="navbar.jsp" %>
         <h1 class="greeting">Bienvenue sur Tesla-Car-Simulator</h1>
-        <div class="car">   
+        <div class="car">
+            <div class="chaise" id="chaise">
+            </div>
         </div>
         
         <div class="information">
@@ -33,9 +57,9 @@
                 <% for (Configuration configuration : configurations) { %>
                     <div class="card-info">
                         <div class="card-header">
-                            <h4><%= configuration.getConfig() %></h4>
+                            <h4><%= configuration.getConfig() %> (deg)</h4>
                         </div>
-                        <p><%= configuration.getValeur() %></p>
+                        <p><%= configuration.getValeur() %> deg</p>
                     </div>
                 <%  } %>
             </div>
@@ -46,14 +70,14 @@
                     <div class="card-header">
                         <h4>Kilometrage (km)</h4>
                     </div>
-                    <p>24 km</p>
+                    <p><%= v.getKilometrage() %> km</p>
                 </div>
                 
                 <div class="card-info">
                     <div class="card-header">
-                        <h4>Consomation (w/h)</h4>
+                        <h4>Consomation (W)</h4>
                     </div>
-                    <p>1200 Wh</p>
+                    <p><%= v.getConsomation() %> W</p>
                 </div>
             </div>
             
@@ -73,5 +97,9 @@
                 </form>
             </div>
         </div>
+        <script>
+            const element = document.getElementById("chaise");
+            element.style = "animation: depl 1 2s; top:<%= c.getPosY() %>px; left:<%= c.getPosX() %>px;";
+        </script>
     </body>
 </html>

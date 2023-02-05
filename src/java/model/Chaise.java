@@ -4,14 +4,20 @@
  */
 package model;
 
+import annotation.DBTable;
+import bdd.object.BddObject;
+
 /**
  *
  * @author i.m.a
  */
-public class Chaise {
+@DBTable(tableName = "v_chair_disposition")
+public class Chaise extends BddObject{
     private int utilisateurId;
     private double posX;
     private double posY;
+    private double defaultX;
+    private double defaultY;
 
     public int getUtilisateurId() {
         return utilisateurId;
@@ -35,5 +41,21 @@ public class Chaise {
 
     public void setPosY(double posY) {
         this.posY = posY;
+    }
+
+    public double getDefaultX() {
+        return defaultX;
+    }
+
+    public void setDefaultX(double defaultX) {
+        this.defaultX = defaultX;
+    }
+
+    public double getDefaultY() {
+        return defaultY;
+    }
+
+    public void setDefaultY(double defaultY) {
+        this.defaultY = defaultY;
     }
 }
