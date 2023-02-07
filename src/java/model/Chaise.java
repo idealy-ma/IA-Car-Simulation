@@ -4,15 +4,20 @@
  */
 package model;
 
-import annotation.DBTable;
-import bdd.object.BddObject;
+
+import com.google.gson.reflect.TypeToken;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import util.FileAccess;
 
 /**
  *
  * @author i.m.a
  */
-@DBTable(tableName = "v_chair_disposition")
-public class Chaise extends BddObject{
+
+public class Chaise extends FileAccess{
     private int utilisateurId;
     private double posX;
     private double posY;
@@ -57,5 +62,19 @@ public class Chaise extends BddObject{
 
     public void setDefaultY(double defaultY) {
         this.defaultY = defaultY;
+    }
+    
+    public Chaise findChaise(File f) throws FileNotFoundException{
+        Type t = new TypeToken<ArrayList<Chaise>>(){}.getType();
+        ArrayList<Object> obj = this.findAll(f, t);
+        Chaise ch = null;
+        for (Object object : obj) {
+            ch = (Chaise) object;
+            if(ch.getUtilisateurId() == this.getUtilisateurId()){
+                return ch;
+            }
+        }
+        
+        return ch;
     }
 }

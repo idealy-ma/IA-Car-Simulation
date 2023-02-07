@@ -5,18 +5,25 @@
 package model;
 
 import bdd.object.BddObject;
+import com.google.gson.reflect.TypeToken;
+import java.io.File;
+import java.lang.reflect.Type;
 import java.sql.Connection;
+import java.sql.Time;
 import java.util.ArrayList;
+import util.FileAccess;
 
 /**
  *
  * @author i.m.a
  */
-public class Configuration extends BddObject{
+public class Configuration extends FileAccess{
     private int utilisateurId;
     private int configurationId;
     private String config;
     private double valeur;
+    private String configDebut;
+    private String configFin;
 
     public int getUtilisateurId() {
         return utilisateurId;
@@ -49,16 +56,33 @@ public class Configuration extends BddObject{
     public void setValeur(double valeur) {
         this.valeur = valeur;
     }
+
+    public String getConfigDebut() {
+        return configDebut;
+    }
+
+    public void setConfigDebut(String configDebut) {
+        this.configDebut = configDebut;
+    }
+
+    public String getConfigFin() {
+        return configFin;
+    }
+
+    public void setConfigFin(String configFin) {
+        this.configFin = configFin;
+    }
     
-    public ArrayList<Configuration> getUserPref(Connection c, int utilisateurId) throws Exception{
+    public ArrayList<Configuration> getUserPref(int utilisateurId) throws Exception{
+        Type t = new TypeToken<ArrayList<Configuration>>(){}.getType();
         ArrayList<Configuration> configurations = new ArrayList<>();
-        String sql = "SELECT * FROM v_userPref  WHERE utilisateurid= ?";
-        ArrayList<Object> al = new ArrayList<>();
-        al.add(utilisateurId);
-        ArrayList<Object> liste = this.executeResultedQuery(c, sql, al);
+        ArrayList<Object> liste = this.findAll(new File("/home/i.m.a/Documents/GitHub/IA-Car-Simulation/src/java/configuration.json"),t);
         
         for (Object object : liste) {
-            configurations.add((Configuration) object);
+            Configuration configuration = (Configuration) object;
+            if(configuration.getUtilisateurId() == this.getUtilisateurId()){
+                configurations.add((Configuration) object);
+            }
         }
         
         return configurations;

@@ -56,13 +56,19 @@ CREATE TABLE kilometrageFait(
     valuer float8
 );
 
+DROP TABLE IF EXISTS Vehicule CASCADE;
+CREATE TABLE vehicule(
+    consomation float8,
+    battery float8
+);
+
 DROP TABLE IF EXISTS consomation CASCADE;
 CREATE TABLE consomation(
     id serial primary key,
     valeur float8 check (valeur>0)
 );
 
-
+INSERT INTO vehicule VALUES(5, 5000);
 
 INSERT INTO utilisateur VALUES (default,'Idealy', 150, 'Idealy', '1234');
 INSERT INTO configuration VALUES (default, 'Climatiseur');
@@ -81,6 +87,8 @@ insert into kilometragefait VALUES (default, 0);
 insert into dispositiondefault VALUES (30,30);
 
 insert into chaisedisposition VALUES (1,30,100);
+
+select * from chaisedisposition;
 
 CREATE OR REPLACE VIEW utilisateurPref AS(
     SELECT utilisateurid,
@@ -146,6 +154,7 @@ create or replace view kilometrageTotal as(
     from kilometragefait
 );
 
+drop view vehicule;
 create or replace view vehicule as(
     select kilometrage, kilometrage*valeur consomation
     from kilometrageTotal

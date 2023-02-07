@@ -1,0 +1,9 @@
+[
+    {
+        "utilisateurId": 1,
+        "posX" : 3,
+        "posY" : 30,
+        "defaultX" : 100,
+        "defaultY" : 30
+    }
+]
